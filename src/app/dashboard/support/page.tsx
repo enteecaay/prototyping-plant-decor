@@ -123,14 +123,14 @@ export default function SupportStaffDashboard() {
       key: 'status',
       render: (status: CareServiceStatus) => {
         const colors: Record<CareServiceStatus, string> = {
-            [CareServiceStatus.PENDING]: 'orange',
-            [CareServiceStatus.CONFIRMED]: 'blue',
-            [CareServiceStatus.ASSIGNED]: 'cyan',
-            [CareServiceStatus.IN_PROGRESS]: 'purple',
-            [CareServiceStatus.COMPLETED]: 'green',
-            [CareServiceStatus.CANCELLED]: 'red',
-            [CareServiceStatus.APPROVED]: '',
-            [CareServiceStatus.REJECTED]: ''
+          [CareServiceStatus.PENDING]: 'orange',
+          [CareServiceStatus.CONFIRMED]: 'blue',
+          [CareServiceStatus.ASSIGNED]: 'cyan',
+          [CareServiceStatus.IN_PROGRESS]: 'purple',
+          [CareServiceStatus.COMPLETED]: 'green',
+          [CareServiceStatus.CANCELLED]: 'red',
+          [CareServiceStatus.APPROVED]: 'green',
+          [CareServiceStatus.REJECTED]: 'red',
         };
         const labels: Record<CareServiceStatus, string> = {
           [CareServiceStatus.PENDING]: 'Chờ xác nhận',
@@ -139,8 +139,8 @@ export default function SupportStaffDashboard() {
           [CareServiceStatus.IN_PROGRESS]: 'Đang làm',
           [CareServiceStatus.COMPLETED]: 'Hoàn thành',
           [CareServiceStatus.CANCELLED]: 'Đã hủy',
-          [CareServiceStatus.APPROVED]: '',
-          [CareServiceStatus.REJECTED]: ''
+          [CareServiceStatus.APPROVED]: 'Đã duyệt',
+          [CareServiceStatus.REJECTED]: 'Từ chối',
         };
         return <Tag color={colors[status]}>{labels[status]}</Tag>;
       },

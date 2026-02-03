@@ -67,14 +67,14 @@ export default function CustomerDashboard() {
     };
 
     const careColors: Record<CareServiceStatus, string> = {
-        [CareServiceStatus.PENDING]: 'orange',
-        [CareServiceStatus.APPROVED]: 'green',
-        [CareServiceStatus.REJECTED]: 'red',
-        [CareServiceStatus.IN_PROGRESS]: 'processing',
-        [CareServiceStatus.COMPLETED]: 'green',
-        [CareServiceStatus.CANCELLED]: 'red',
-        [CareServiceStatus.CONFIRMED]: '',
-        [CareServiceStatus.ASSIGNED]: ''
+      [CareServiceStatus.PENDING]: 'orange',
+      [CareServiceStatus.CONFIRMED]: 'blue',
+      [CareServiceStatus.ASSIGNED]: 'cyan',
+      [CareServiceStatus.IN_PROGRESS]: 'processing',
+      [CareServiceStatus.COMPLETED]: 'green',
+      [CareServiceStatus.CANCELLED]: 'red',
+      [CareServiceStatus.APPROVED]: 'green',
+      [CareServiceStatus.REJECTED]: 'red',
     };
 
     return (orderColors[status as OrderStatus] || careColors[status as CareServiceStatus] || 'default');

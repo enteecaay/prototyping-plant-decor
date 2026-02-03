@@ -1,65 +1,154 @@
-import Image from "next/image";
+'use client';
+
+import React from 'react';
+import { Button, Card, Row, Col, Statistic, Space } from 'antd';
+import { ShoppingOutlined, TeamOutlined, GiftOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import Link from 'next/link';
+import MainLayout from '@/components/MainLayout';
+import { useAuthStore } from '@/store/auth';
 
 export default function Home() {
+  const { isAuthenticated, user } = useAuthStore();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <MainLayout title="Welcome to Plant Decor">
+      <div style={{ marginBottom: '48px' }}>
+        <Row gutter={[16, 16]} style={{ marginBottom: '32px' }}>
+          <Col xs={24} sm={12} md={6}>
+            <Statistic
+              title="Total Plants"
+              value={150}
+              prefix={<ShoppingOutlined />}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+          </Col>
+          <Col xs={24} sm={12} md={6}>
+            <Statistic
+              title="Happy Customers"
+              value={2500}
+              prefix={<TeamOutlined />}
+            />
+          </Col>
+          <Col xs={24} sm={12} md={6}>
+            <Statistic
+              title="Care Services"
+              value={350}
+              prefix={<GiftOutlined />}
+            />
+          </Col>
+          <Col xs={24} sm={12} md={6}>
+            <Statistic
+              title="Satisfaction Rate"
+              value={98}
+              suffix="%"
+              prefix={<CheckCircleOutlined />}
+            />
+          </Col>
+        </Row>
+
+        {!isAuthenticated ? (
+          <Card style={{ marginBottom: '32px', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
+            <div style={{ textAlign: 'center' }}>
+              <h2 style={{ color: 'white', marginBottom: '16px' }}>
+                Welcome to Plant Decor! 🌿
+              </h2>
+              <p style={{ color: 'white', marginBottom: '24px' }}>
+                Discover beautiful plants and premium care services. Start your plant journey today!
+              </p>
+              <Space>
+                <Link href="/auth/login">
+                  <Button type="primary" size="large">
+                    Login
+                  </Button>
+                </Link>
+                <Link href="/auth/register">
+                  <Button size="large" style={{ background: 'white', color: '#667eea' }}>
+                    Sign Up
+                  </Button>
+                </Link>
+              </Space>
+            </div>
+          </Card>
+        ) : (
+          <Card style={{ marginBottom: '32px', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
+            <div style={{ textAlign: 'center' }}>
+              <h2 style={{ color: 'white', marginBottom: '16px' }}>
+                Welcome back, {user?.name}! 👋
+              </h2>
+              <p style={{ color: 'white', marginBottom: '24px' }}>
+                Role: <strong>{user?.role?.toUpperCase()}</strong>
+              </p>
+            </div>
+          </Card>
+        )}
+
+        <Row gutter={[16, 16]}>
+          <Col xs={24} md={8}>
+            <Card hoverable>
+              <h3>🌱 Browse Catalog</h3>
+              <p>Explore our collection of beautiful plants from around the world.</p>
+              <Link href="/catalog">
+                <Button type="primary" block>
+                  View Catalog
+                </Button>
+              </Link>
+            </Card>
+          </Col>
+          <Col xs={24} md={8}>
+            <Card hoverable>
+              <h3>🧑‍🌾 Care Services</h3>
+              <p>Get professional plant care service with certified caretakers.</p>
+              <Button type="primary" block disabled>
+                Learn More
+              </Button>
+            </Card>
+          </Col>
+          <Col xs={24} md={8}>
+            <Card hoverable>
+              <h3>📱 Track Orders</h3>
+              <p>Real-time tracking for your plant orders and care service appointments.</p>
+              {isAuthenticated && user?.role === 'customer' ? (
+                <Link href="/dashboard/customer">
+                  <Button type="primary" block>
+                    Go to Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <Button type="primary" block disabled>
+                  Available for Customers
+                </Button>
+              )}
+            </Card>
+          </Col>
+        </Row>
+
+        {isAuthenticated && (
+          <div style={{ marginTop: '32px', padding: '24px', background: '#fafafa', borderRadius: '8px' }}>
+            <h3>📊 Quick Stats</h3>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} sm={12} md={6}>
+                <Card>
+                  <Statistic title="Your Account" value={user?.role} />
+                </Card>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Card>
+                  <Statistic title="Email" value={user?.email} />
+                </Card>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Card>
+                  <Statistic title="Joined" value={user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'} />
+                </Card>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Card>
+                  <Statistic title="Status" value="Active" valueStyle={{ color: '#52c41a' }} />
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        )}
+      </div>
+    </MainLayout>
   );
 }
