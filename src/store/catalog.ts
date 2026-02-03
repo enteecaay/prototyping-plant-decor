@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Plant, PlantCategory } from '@/types';
+import { Plant, PlantCategory, PlantVariant, CareInstruction } from '@/types';
 import { MOCK_PLANTS, PLANT_CATEGORIES } from '@/mock-data';
 
 interface CatalogStore {
@@ -14,6 +14,12 @@ interface CatalogStore {
   searchPlants: (query: string) => void;
   getPlantById: (id: string) => Plant | undefined;
   getAllPlants: () => Plant[];
+  addPlant: (plant: Plant) => void;
+  updatePlant: (id: string, plant: Partial<Plant>) => void;
+  deletePlant: (id: string) => void;
+  addPlantVariant: (plantId: string, variant: PlantVariant) => void;
+  updatePlantVariant: (plantId: string, variantId: string, variant: Partial<PlantVariant>) => void;
+  deletePlantVariant: (plantId: string, variantId: string) => void;
 }
 
 export const useCatalogStore = create<CatalogStore>((set, get) => ({
@@ -77,5 +83,63 @@ export const useCatalogStore = create<CatalogStore>((set, get) => ({
 
   getAllPlants: () => {
     return get().plants;
+  },
+
+  addPlant: (plant) => {
+    const plants = [...get().plants, plant];
+    set({ plants, filteredPlants: plants });
+  },
+
+  updatePlant: (id, updates) => {
+    const plants = get().plants.map((plant) =>
+      plant.id === id ? { ...plant, ...updates } : plant
+    );
+    set({ plants, filteredPlants: plants });
+  },
+
+  deletePlant: (id) => {
+    const plants = get().plants.filter((plant) => plant.id !== id);
+    set({ plants, filteredPlants: plants });
+  },
+
+  addPlantVariant: (plantId, variant) => {
+    const plants = get().plants.map((plant) => {
+      if (plant.id === plantId) {
+        return {
+          ...plant,
+          variants: [...(plant.variants || []), variant],
+        };
+      }
+      return plant;
+    });
+    set({ plants, filteredPlants: plants });
+  },
+
+  updatePlantVariant: (plantId, variantId, updates) => {
+    const plants = get().plants.map((plant) => {
+      if (plant.id === plantId) {
+        return {
+          ...plant,
+          variants: (plant.variants || []).map((variant) =>
+            variant.id === variantId ? { ...variant, ...updates } : variant
+          ),
+        };
+      }
+      return plant;
+    });
+    set({ plants, filteredPlants: plants });
+  },
+
+  deletePlantVariant: (plantId, variantId) => {
+    const plants = get().plants.map((plant) => {
+      if (plant.id === plantId) {
+        return {
+          ...plant,
+          variants: (plant.variants || []).filter((variant) => variant.id !== variantId),
+        };
+      }
+      return plant;
+    });
+    set({ plants, filteredPlants: plants });
   },
 }));

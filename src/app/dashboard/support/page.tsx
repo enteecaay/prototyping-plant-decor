@@ -216,6 +216,11 @@ export default function SupportStaffDashboard() {
               </Row>
             </Card>
           </Col>
+          <Col xs={24}>
+            <Card title="🌿 Plant Management" extra={<Link href="/dashboard/admin/plants"><Button type="primary" icon={<FileTextOutlined />}>Manage Plants</Button></Link>}>
+              <p>Manage plant catalog, add new plants, and create unique plant instances (like bonsai trees)</p>
+            </Card>
+          </Col>
         </Row>
       ),
     },

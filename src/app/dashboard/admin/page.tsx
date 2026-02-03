@@ -98,7 +98,10 @@ export default function AdminDashboard() {
       key: 'plants',
       label: `🌿 Plants (${MOCK_PLANTS.length})`,
       children: (
-        <Card>
+        <Card
+          title="Plant Catalog"
+          extra={<Link href="/dashboard/admin/plants"><Button type="primary" icon={<FileTextOutlined />}>Manage Plants</Button></Link>}
+        >
           <Table columns={plantColumns} dataSource={MOCK_PLANTS} rowKey="id" pagination={{ pageSize: 10 }} />
         </Card>
       ),
