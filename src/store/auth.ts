@@ -144,8 +144,10 @@ export const useAuthStore = create<AuthStore>()(
 // Real-time token monitoring with Zustand subscribe
 let tokenCheckInterval: NodeJS.Timeout | null = null;
 
-export const startTokenMonitoring = () => {
-  if (typeof window === 'undefined') return;
+export const startTokenMonitoring = (): (() => void) => {
+  if (typeof window === 'undefined') {
+    return () => {}; // Return empty cleanup function for SSR
+  }
 
   // Clear existing interval
   if (tokenCheckInterval) {

@@ -14,7 +14,9 @@ export default function TokenMonitoringInitializer() {
 
     // Cleanup on unmount
     return () => {
-      cleanup();
+      if (cleanup) {
+        cleanup();
+      }
       stopTokenMonitoring();
     };
   }, []);

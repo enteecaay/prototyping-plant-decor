@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    // Skip middleware deprecation warning - will remove middleware.ts
+  },
 };
 
 export default nextConfig;
