@@ -13,8 +13,8 @@ export default function TokenMonitoringInitializer() {
     const cleanup = startTokenMonitoring();
 
     // Cleanup on unmount
-    return () => {
-      if (cleanup) {
+    return (): void => {
+      if (typeof cleanup === 'function') {
         cleanup();
       }
       stopTokenMonitoring();
